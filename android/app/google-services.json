@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "739820857737",
+    "project_id": "socialmedia-dddbd",
+    "storage_bucket": "socialmedia-dddbd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739820857737:android:ff15cd0c56347270b8d958",
+        "android_client_info": {
+          "package_name": "com.socialmedia.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJ0fiQpbJtGveeBuk9xsWCM1LmAGaXoh0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
