@@ -1,8 +1,10 @@
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:instagram_clone_flutter/di/di.dart';
 import 'package:instagram_clone_flutter/resources/auth_methods.dart';
 import 'package:instagram_clone_flutter/responsive/mobile_screen_layout.dart';
 import 'package:instagram_clone_flutter/responsive/responsive_layout.dart';
@@ -25,6 +27,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
   bool _isLoading = false;
+
   //Uint8List? _image;
   String selctFile = '';
   XFile? file;
@@ -41,19 +44,27 @@ class _SignupScreenState extends State<SignupScreen> {
     _usernameController.dispose();
   }
 
-  void signUpUser() async {
+  Future<void> signUpUser() async {
+    // if photo is not selected, show error
+    // if (selectedImageInBytes == null) {
+    //   showSnackBar(context, 'Please select a photo');
+    //   return;
+    // }
+
     // set loading to true
     setState(() {
       _isLoading = true;
     });
 
     // signup user using our authmethodds
-    String res = await AuthMethods().signUpUser(
-        email: _emailController.text,
-        password: _passwordController.text,
-        username: _usernameController.text,
-        bio: _bioController.text,
-        file: selectedImageInBytes!);
+    var authMethods = getIt<AuthMethods>();
+    String res = await authMethods.signUpUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+      username: _usernameController.text,
+      bio: _bioController.text,
+      file: selectedImageInBytes ?? Uint8List(0),
+    );
     // if string returned is sucess, user has been created
     if (res == "success") {
       setState(() {
@@ -90,7 +101,7 @@ class _SignupScreenState extends State<SignupScreen> {
   // }
   selectImage() async {
     FilePickerResult? fileResult =
-    await FilePicker.platform.pickFiles(allowMultiple: true);
+        await FilePicker.platform.pickFiles(allowMultiple: true);
 
     if (fileResult != null) {
       setState(() {
@@ -108,8 +119,6 @@ class _SignupScreenState extends State<SignupScreen> {
     }
     print(selctFile);
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -140,13 +149,11 @@ class _SignupScreenState extends State<SignupScreen> {
                       ? CircleAvatar(
                           radius: 64,
                           backgroundImage: MemoryImage(selectedImageInBytes!),
-                          backgroundColor: Colors.red,
                         )
                       : const CircleAvatar(
                           radius: 64,
                           backgroundImage: NetworkImage(
                               'https://i.stack.imgur.com/l60Hf.png'),
-                          backgroundColor: Colors.red,
                         ),
                   Positioned(
                     bottom: -10,
@@ -195,7 +202,9 @@ class _SignupScreenState extends State<SignupScreen> {
                 height: 24,
               ),
               InkWell(
-                onTap: signUpUser,
+                onTap: () async {
+                  await signUpUser();
+                },
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,
@@ -204,14 +213,18 @@ class _SignupScreenState extends State<SignupScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(4)),
                     ),
-                    color: blueColor,
+                    color: primaryColor,
                   ),
                   child: !_isLoading
                       ? const Text(
                           'Sign up',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         )
                       : const CircularProgressIndicator(
-                          color: primaryColor,
+                          color: Colors.white,
                         ),
                 ),
               ),
@@ -255,5 +268,4 @@ class _SignupScreenState extends State<SignupScreen> {
       ),
     );
   }
-
 }

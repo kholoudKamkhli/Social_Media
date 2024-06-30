@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_clone_flutter/di/di.dart';
 import 'package:instagram_clone_flutter/resources/auth_methods.dart';
 import 'package:instagram_clone_flutter/responsive/mobile_screen_layout.dart';
 import 'package:instagram_clone_flutter/responsive/responsive_layout.dart';
@@ -22,41 +23,38 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
 
-  @override
-  void dispose() {
-    super.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-  }
-
-  void loginUser() async {
+  Future<void> loginUser() async {
     setState(() {
       _isLoading = true;
     });
-    String res = await AuthMethods().loginUser(
-        email: _emailController.text, password: _passwordController.text);
-    if (res == 'success') {
-      if (context.mounted) {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (context) => const ResponsiveLayout(
-                mobileScreenLayout: MobileScreenLayout(),
-                webScreenLayout: WebScreenLayout(),
-              ),
-            ),
-            (route) => false);
+    var auth_mods = getIt<AuthMethods>();
+    print("hiiiiiiiiiiiiiiii");
+    String res = await auth_mods.loginUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
 
-        setState(() {
-          _isLoading = false;
-        });
-      }
+    if (!mounted) return; // Check if the widget is still mounted
+
+    if (res == 'success') {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+        (route) => false,
+      );
+
+      setState(() {
+        _isLoading = false;
+      });
     } else {
       setState(() {
         _isLoading = false;
       });
-      if (context.mounted) {
-        showSnackBar(context, res);
-      }
+      showSnackBar(context, res);
     }
   }
 
@@ -104,23 +102,31 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 24,
               ),
               InkWell(
-                onTap: loginUser,
+                onTap: () async {
+                  await loginUser();
+                  print(getIt<AuthMethods>().user!.uid);
+                },
                 child: Container(
                   width: double.infinity,
+
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   decoration: const ShapeDecoration(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(4)),
                     ),
-                    color: blueColor,
+                    color: primaryColor,
                   ),
                   child: !_isLoading
                       ? const Text(
                           'Log in',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         )
                       : const CircularProgressIndicator(
-                          color: primaryColor,
+                          color: Colors.white,
                         ),
                 ),
               ),

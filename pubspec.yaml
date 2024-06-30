@@ -30,9 +30,12 @@ environment:
 dependencies:
   cloud_firestore: ^4.8.1
   cupertino_icons: ^1.0.2
+  shared_preferences:
   file_picker: ^8.0.5
   firebase_auth: ^4.6.3
   firebase_core: ^2.14.0
+  get_it: ^7.6.7
+  injectable:
   firebase_storage: ^11.2.3
   flutter:
     sdk: flutter
@@ -45,6 +48,8 @@ dependencies:
 
 dev_dependencies:
   flutter_lints: ^2.0.1
+  injectable_generator:
+  build_runner:
   flutter_test:
     sdk: flutter
 

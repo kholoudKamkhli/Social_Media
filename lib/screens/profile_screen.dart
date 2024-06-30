@@ -67,6 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("the user id is ${widget.uid}");
     return isLoading
         ? const Center(
             child: CircularProgressIndicator(),
@@ -87,12 +88,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       Row(
                         children: [
-                          CircleAvatar(
+                       userData['photoUrl']!=''? CircleAvatar(
                             backgroundColor: Colors.grey,
                             backgroundImage: NetworkImage(
                               userData['photoUrl'],
                             ),
                             radius: 40,
+                          ):
+                          const CircleAvatar(
+                            backgroundColor: Colors.grey,
+                            radius: 40,
+                            child: Icon(
+                              Icons.person,
+                              color: Colors.white,
+                              size: 40,
+                            ),
                           ),
                           Expanded(
                             flex: 1,

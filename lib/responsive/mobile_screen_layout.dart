@@ -3,6 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:instagram_clone_flutter/utils/colors.dart';
 import 'package:instagram_clone_flutter/utils/global_variable.dart';
 
+import '../di/di.dart';
+import '../resources/auth_methods.dart';
+import '../screens/add_post_screen.dart';
+import '../screens/feed_screen.dart';
+import '../screens/profile_screen.dart';
+import '../screens/search_screen.dart';
+
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({Key? key}) : super(key: key);
 
@@ -39,6 +46,25 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
 
   @override
   Widget build(BuildContext context) {
+    var authMethods = getIt<AuthMethods>();
+    List<Widget> homeScreenItems = [
+      const FeedScreen(),
+      const SearchScreen(),
+      const AddPostScreen(),
+      Container(
+        color: mobileBackgroundColor,
+        child: const Center(
+          child: Text(
+            'Favorite',
+            style: TextStyle(color: primaryColor),
+          ),
+        ),
+      ),
+      ProfileScreen(
+        uid: authMethods.user!.uid,
+      ),
+    ];
+
     return Scaffold(
       body: PageView(
         controller: pageController,
