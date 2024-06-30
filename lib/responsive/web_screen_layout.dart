@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_clone_flutter/screens/followers_screen.dart';
+import 'package:instagram_clone_flutter/screens/following_screen.dart';
 import 'package:instagram_clone_flutter/utils/colors.dart';
 import 'package:instagram_clone_flutter/utils/global_variable.dart';
 
@@ -54,6 +56,8 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
       const FeedScreen(),
       const SearchScreen(),
       const AddPostScreen(),
+       FollowersScreen(),
+      FollowingScreen(),
       ProfileScreen(
         uid: authMethods.user!.uid,
       ),

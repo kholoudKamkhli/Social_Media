@@ -7,6 +7,8 @@ import 'package:instagram_clone_flutter/resources/auth_methods.dart';
 import 'package:instagram_clone_flutter/responsive/mobile_screen_layout.dart';
 import 'package:instagram_clone_flutter/responsive/responsive_layout.dart';
 import 'package:instagram_clone_flutter/responsive/web_screen_layout.dart';
+import 'package:instagram_clone_flutter/screens/followers_screen.dart';
+import 'package:instagram_clone_flutter/screens/following_screen.dart';
 import 'package:instagram_clone_flutter/screens/login_screen.dart';
 import 'package:instagram_clone_flutter/utils/colors.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +42,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Instagram Clone',
+        routes: {
+          FollowersScreen.routeName: (context) => FollowersScreen(), // Define the route
+          FollowingScreen.routeName: (context) => FollowingScreen(), // Define the route
+        },
         theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: mobileBackgroundColor,
         ),

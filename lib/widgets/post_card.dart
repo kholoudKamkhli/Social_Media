@@ -75,6 +75,7 @@ class _PostCardState extends State<PostCard> {
       ),
       padding: const EdgeInsets.symmetric(
         vertical: 10,
+        horizontal: 30
       ),
       child: Column(
         children: [
@@ -167,13 +168,9 @@ class _PostCardState extends State<PostCard> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.35,
-                  width: double.infinity,
-                  child: Image.network(
-                    widget.snap['postUrl'].toString(),
-                    fit: BoxFit.cover,
-                  ),
+                Image.network(
+                  widget.snap['postUrl'].toString(),
+                  fit: BoxFit.fitHeight,
                 ),
                 AnimatedOpacity(
                   duration: const Duration(milliseconds: 200),
