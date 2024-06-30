@@ -11,6 +11,7 @@ import 'package:instagram_clone_flutter/widgets/follow_button.dart';
 import 'package:instagram_clone_flutter/models/user.dart' as model;
 
 import '../models/user.dart';
+import 'following_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String uid;
@@ -142,19 +143,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               buildStatColumn(postLen, "posts"),
                               InkWell(
                                   onTap: () {
-                                    Navigator.pushReplacementNamed(
+                                    
+                                    print('dddddd');
+                                    
+                                    Navigator.push(
                                       context,
-                                      FollowersScreen.routeName,
-                                      arguments: followersList,
+                                    MaterialPageRoute(builder: (context)=>FollowersScreen(uid: FirebaseAuth.instance.currentUser!.uid,))
                                     );
                                   },
                                   child:
                                   buildStatColumn(followers, "followers")),
                               InkWell(onTap: () {
-                                Navigator.pushReplacementNamed(
-                                  context,
-                                  FollowersScreen.routeName,
-                                  arguments: followingList,
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context)=>FollowingScreen(uid: FirebaseAuth.instance.currentUser!.uid,))
                                 );
                               },child: buildStatColumn(following, "following")),
                             ],

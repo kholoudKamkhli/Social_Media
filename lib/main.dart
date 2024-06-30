@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: mobileBackgroundColor,
         ),
-        home:authMethods.is_auth?const ResponsiveLayout(
+        home:FirebaseAuth.instance.currentUser != null?const ResponsiveLayout(
           mobileScreenLayout: MobileScreenLayout(),
           webScreenLayout: WebScreenLayout(),
         ):const LoginScreen()
