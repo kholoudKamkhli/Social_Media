@@ -56,8 +56,8 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
       const FeedScreen(),
       const SearchScreen(),
       const AddPostScreen(),
-       FollowersScreen(),
-      FollowingScreen(),
+       FollowersScreen(uid:authMethods.user!.uid),
+      FollowingScreen(uid:authMethods.user!.uid),
       ProfileScreen(
         uid: authMethods.user!.uid,
       ),

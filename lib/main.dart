@@ -43,8 +43,6 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Instagram Clone',
         routes: {
-          FollowersScreen.routeName: (context) => FollowersScreen(), // Define the route
-          FollowingScreen.routeName: (context) => FollowingScreen(), // Define the route
         },
         theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: mobileBackgroundColor,
