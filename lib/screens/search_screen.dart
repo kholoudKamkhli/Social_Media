@@ -72,13 +72,17 @@ class _SearchScreenState extends State<SearchScreen> {
                 var photoUrl = userData['photoUrl'] ?? ''; // Handle missing photoUrl
 
                 return InkWell(
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => ProfileScreen(
-                        uid: userData['uid'],
+                  onTap: () => {
+                    print("here uiddd"),
+                    print(userData['uid']),
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ProfileScreen(
+                          uid: userData['uid'],
+                        ),
                       ),
                     ),
-                  ),
+                  },
                   child: ListTile(
                     leading: CircleAvatar(
                       backgroundImage: photoUrl.isNotEmpty

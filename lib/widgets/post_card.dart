@@ -12,7 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class PostCard extends StatefulWidget {
-  final Map<String, dynamic> snap;
+  final snap;
   const PostCard({
     Key? key,
     required this.snap,
@@ -39,15 +39,14 @@ class _PostCardState extends State<PostCard> {
           .doc(widget.snap['postId'])
           .collection('comments')
           .get();
-      setState(() {
-        commentLen = snap.docs.length;
-      });
+      commentLen = snap.docs.length;
     } catch (err) {
       showSnackBar(
         context,
         err.toString(),
       );
     }
+    setState(() {});
   }
 
   deletePost(String postId) async {
@@ -67,6 +66,7 @@ class _PostCardState extends State<PostCard> {
     final width = MediaQuery.of(context).size.width;
 
     return Container(
+      // boundary needed for web
       decoration: BoxDecoration(
         border: Border.all(
           color: width > webScreenSize ? secondaryColor : mobileBackgroundColor,
@@ -75,7 +75,6 @@ class _PostCardState extends State<PostCard> {
       ),
       padding: const EdgeInsets.symmetric(
         vertical: 10,
-        horizontal: 30
       ),
       child: Column(
         children: [
@@ -130,13 +129,16 @@ class _PostCardState extends State<PostCard> {
                                   .map(
                                     (e) => InkWell(
                                     child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 12, horizontal: 16),
+                                      padding:
+                                      const EdgeInsets.symmetric(
+                                          vertical: 12,
+                                          horizontal: 16),
                                       child: Text(e),
                                     ),
                                     onTap: () {
                                       deletePost(
-                                        widget.snap['postId'].toString(),
+                                        widget.snap['postId']
+                                            .toString(),
                                       );
                                       // remove the dialog box
                                       Navigator.of(context).pop();
@@ -147,7 +149,7 @@ class _PostCardState extends State<PostCard> {
                       },
                     );
                   },
-                  icon: const Icon(Icons.more_vert),
+                  icon: const Icon(Icons.more_vert,color: Color.fromRGBO(229, 184, 61, 1.0),),
                 )
                     : Container(),
               ],
@@ -168,16 +170,22 @@ class _PostCardState extends State<PostCard> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                Image.network(
-                  widget.snap['postUrl'].toString(),
-                  fit: BoxFit.fitHeight,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.50,
+                  width: double.infinity,
+                  child: Image.network(
+                    widget.snap['postUrl'].toString(),
+                    fit: BoxFit.fitHeight,
+                  ),
                 ),
                 AnimatedOpacity(
                   duration: const Duration(milliseconds: 200),
                   opacity: isLikeAnimating ? 1 : 0,
                   child: LikeAnimation(
                     isAnimating: isLikeAnimating,
-                    duration: const Duration(milliseconds: 400),
+                    duration: const Duration(
+                      milliseconds: 400,
+                    ),
                     onEnd: () {
                       setState(() {
                         isLikeAnimating = false;
@@ -203,7 +211,7 @@ class _PostCardState extends State<PostCard> {
                   icon: widget.snap['likes'].contains(user.uid)
                       ? const Icon(
                     Icons.favorite,
-                    color: Colors.red,
+                    color: Color.fromRGBO(229, 184, 61, 1.0),
                   )
                       : const Icon(
                     Icons.favorite_border,
@@ -227,24 +235,9 @@ class _PostCardState extends State<PostCard> {
                   ),
                 ),
               ),
-              IconButton(
-                icon: const Icon(
-                  Icons.send,
-                ),
-                onPressed: () {},
-              ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: IconButton(
-                    icon: const Icon(Icons.bookmark_border),
-                    onPressed: () {},
-                  ),
-                ),
-              ),
             ],
           ),
-          // DESCRIPTION AND NUMBER OF COMMENTS
+          //DESCRIPTION AND NUMBER OF COMMENTS
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
@@ -252,15 +245,14 @@ class _PostCardState extends State<PostCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 DefaultTextStyle(
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall!
-                      .copyWith(fontWeight: FontWeight.w800),
-                  child: Text(
-                    '${widget.snap['likes'].length} likes',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(fontWeight: FontWeight.w800),
+                    child: Text(
+                      '${widget.snap['likes'].length} likes',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    )),
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.only(
@@ -314,7 +306,7 @@ class _PostCardState extends State<PostCard> {
                 ),
               ],
             ),
-          ),
+          )
         ],
       ),
     );

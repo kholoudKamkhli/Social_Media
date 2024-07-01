@@ -29,16 +29,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
           children: <Widget>[
             SimpleDialogOption(
                 padding: const EdgeInsets.all(20),
-                child: const Text('Take a photo'),
-                onPressed: () async {
-                  Navigator.pop(context);
-                  Uint8List file = await pickImage(ImageSource.camera);
-                  setState(() {
-                    _file = file;
-                  });
-                }),
-            SimpleDialogOption(
-                padding: const EdgeInsets.all(20),
                 child: const Text('Choose from Gallery'),
                 onPressed: () async {
                   Navigator.of(context).pop();
@@ -61,6 +51,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   }
 
   void postImage(String uid, String username, String profImage) async {
+    print("showed here");
     setState(() {
       isLoading = true;
     });
@@ -121,6 +112,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         ? Center(
             child: IconButton(
               icon: const Icon(
+                color: Color.fromRGBO(229, 184, 61, 1.0),
                 Icons.upload,
               ),
               onPressed: () => _selectImage(context),
@@ -130,7 +122,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
             appBar: AppBar(
               backgroundColor: mobileBackgroundColor,
               leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back,color: Color.fromRGBO(229, 184, 61, 1.0),),
                 onPressed: clearImage,
               ),
               title: const Text(
@@ -147,7 +139,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   child: const Text(
                     "Post",
                     style: TextStyle(
-                        color: Colors.blueAccent,
+                        color: Color.fromRGBO(229, 184, 61, 1.0),
                         fontWeight: FontWeight.bold,
                         fontSize: 16.0),
                   ),

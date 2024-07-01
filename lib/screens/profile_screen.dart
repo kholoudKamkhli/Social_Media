@@ -50,31 +50,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // get post length
       var postSnap = await FirebaseFirestore.instance
           .collection('posts')
-          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .where('uid', isEqualTo: userSnap.data()!['uid'])
           .get();
 
       postLen = postSnap.docs.length;
       userData = userSnap.data()!;
       followers = userSnap.data()!['followers'].length;
       following = userSnap.data()!['following'].length;
-
-      // Fetch follower user objects
-      for (String followerId in userSnap.data()!['followers']) {
-        var followerSnap = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(followerId)
-            .get();
-        followersList.add(model.User.fromSnap(followerSnap));
-      }
-
-      // Fetch following user objects
-      for (String followingId in userSnap.data()!['following']) {
-        var followingSnap = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(followingId)
-            .get();
-        followingList.add(model.User.fromSnap(followingSnap));
-      }
 
       isFollowing = userSnap
           .data()!['followers']
@@ -99,13 +81,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: CircularProgressIndicator(),
     )
         : Scaffold(
-      appBar: AppBar(
-        backgroundColor: mobileBackgroundColor,
-        title: Text(
-          userData['username'],
-        ),
-        centerTitle: false,
-      ),
       body: ListView(
         children: [
           Padding(
@@ -148,7 +123,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     
                                     Navigator.push(
                                       context,
-                                    MaterialPageRoute(builder: (context)=>FollowersScreen(uid: FirebaseAuth.instance.currentUser!.uid,))
+                                    MaterialPageRoute(builder: (context)=>FollowersScreen(uid: widget.uid,))
                                     );
                                   },
                                   child:
@@ -156,7 +131,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               InkWell(onTap: () {
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context)=>FollowingScreen(uid: FirebaseAuth.instance.currentUser!.uid,))
+                                    MaterialPageRoute(builder: (context)=>FollowingScreen(uid: widget.uid,))
                                 );
                               },child: buildStatColumn(following, "following")),
                             ],
@@ -170,9 +145,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ? FollowButton(
                                 text: 'Sign Out',
                                 backgroundColor:
-                                mobileBackgroundColor,
-                                textColor: primaryColor,
-                                borderColor: Colors.grey,
+                                Color.fromRGBO(229, 184, 61, 1.0),
+                                textColor: Colors.white,
+                                borderColor: Color.fromRGBO(229, 184, 61, 1.0),
                                 function: () async {
                                   await AuthMethods().signOut();
                                   if (context.mounted) {
@@ -191,7 +166,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 text: 'Unfollow',
                                 backgroundColor: Colors.white,
                                 textColor: Colors.black,
-                                borderColor: Colors.grey,
+                                borderColor: Color.fromRGBO(229, 184, 61, 1.0),
                                 function: () async {
                                   await FireStoreMethods()
                                       .followUser(
@@ -208,9 +183,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               )
                                   : FollowButton(
                                 text: 'Follow',
-                                backgroundColor: Colors.blue,
+                                backgroundColor: Color.fromRGBO(229, 184, 61, 1.0),
                                 textColor: Colors.white,
-                                borderColor: Colors.blue,
+                                borderColor: Color.fromRGBO(229, 184, 61, 1.0),
                                 function: () async {
                                   await FireStoreMethods()
                                       .followUser(

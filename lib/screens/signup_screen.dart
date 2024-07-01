@@ -74,7 +74,8 @@ class _SignupScreenState extends State<SignupScreen> {
       if (context.mounted) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => const ResponsiveLayout(
+            builder: (context) =>
+            const ResponsiveLayout(
               mobileScreenLayout: MobileScreenLayout(),
               webScreenLayout: WebScreenLayout(),
             ),
@@ -101,7 +102,7 @@ class _SignupScreenState extends State<SignupScreen> {
   // }
   selectImage() async {
     FilePickerResult? fileResult =
-        await FilePicker.platform.pickFiles(allowMultiple: true);
+    await FilePicker.platform.pickFiles(allowMultiple: true);
 
     if (fileResult != null) {
       setState(() {
@@ -135,10 +136,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 flex: 2,
                 child: Container(),
               ),
-              SvgPicture.asset(
-                'assets/ic_instagram.svg',
-                color: primaryColor,
-                height: 64,
+              Image.asset(
+                'assets/glowyyy-removebg-preview.png',
+                color: Color.fromRGBO(229, 184, 61, 1.0),
+                height: 100,
               ),
               const SizedBox(
                 height: 64,
@@ -147,20 +148,19 @@ class _SignupScreenState extends State<SignupScreen> {
                 children: [
                   selectedImageInBytes != null
                       ? CircleAvatar(
-                          radius: 64,
-                          backgroundImage: MemoryImage(selectedImageInBytes!),
-                        )
+                    radius: 64,
+                    backgroundImage: MemoryImage(selectedImageInBytes!),
+                  )
                       : const CircleAvatar(
-                          radius: 64,
-                          backgroundImage: NetworkImage(
-                              'https://i.stack.imgur.com/l60Hf.png'),
-                        ),
+                    backgroundImage: AssetImage('assets/l60Hf.png'),
+                    radius: 64,
+                  ),
                   Positioned(
                     bottom: -10,
                     left: 80,
                     child: IconButton(
                       onPressed: selectImage,
-                      icon: const Icon(Icons.add_a_photo),
+                      icon: const Icon(Icons.add_a_photo,color: Color.fromRGBO(229, 184, 61, 1.0),),
                     ),
                   )
                 ],
@@ -213,19 +213,19 @@ class _SignupScreenState extends State<SignupScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(4)),
                     ),
-                    color: primaryColor,
+                    color: Color.fromRGBO(229, 184, 61, 1.0),
                   ),
                   child: !_isLoading
                       ? const Text(
-                          'Sign up',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
+                    'Sign up',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
                       : const CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
+                    color: Colors.white,
+                  ),
                 ),
               ),
               const SizedBox(
@@ -245,16 +245,18 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ),
-                    ),
+                    onTap: () =>
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        ),
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: const Text(
                         ' Login.',
                         style: TextStyle(
+                          color: Color.fromRGBO(229, 184, 61, 1.0),
                           fontWeight: FontWeight.bold,
                         ),
                       ),

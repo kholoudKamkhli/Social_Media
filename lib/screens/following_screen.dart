@@ -1,71 +1,33 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:instagram_clone_flutter/models/user.dart' as model;
 
-import '../utils/utils.dart';
+import 'package:instagram_clone_flutter/models/user.dart' as model;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class FollowingScreen extends StatefulWidget {
-  static const String routeName = "Follower";
   final String uid;
-  const FollowingScreen({Key? key, required this.uid}) : super(key: key);
-
+  const FollowingScreen({required this.uid, Key? key}) : super(key: key);
 
   @override
-  State<FollowingScreen> createState() => _FollowersScreenState();
+  _FollowingScreenState createState() => _FollowingScreenState();
 }
 
-class _FollowersScreenState extends State<FollowingScreen> {
-  var userData = {};
-  List<model.User> followersList = [];
-  List<model.User> followingList = [];
-  bool isLoading = false;
+class _FollowingScreenState extends State<FollowingScreen> {
+  List<model.User> following = [];
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    getData();
+    fetchFollowers();
   }
 
-  getData() async {
-    setState(() {
-      isLoading = true;
-    });
-    try {
-      var userSnap = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(widget.uid)
-          .get();
-
-      // get post length
-      var postSnap = await FirebaseFirestore.instance
-          .collection('posts')
-          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-          .get();
-
-      userData = userSnap.data()!;
-
-      // Fetch follower user objects
-
-
-      // Fetch following user objects
-      for (String followingId in userSnap.data()!['following']) {
-        var followingSnap = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(followingId)
-            .get();
-        followingList.add(model.User.fromSnap(followingSnap));
-      }
-    } catch (e) {
-      showSnackBar(
-        context,
-        e.toString(),
-      );
-    }
+  void fetchFollowers() async {
+    following = await getFollowers(widget.uid);
     setState(() {
       isLoading = false;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return isLoading
@@ -74,7 +36,7 @@ class _FollowersScreenState extends State<FollowingScreen> {
     )
         : Scaffold(
       appBar: AppBar(
-        title: Text("Following"),
+        title: Text("Followers"),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -91,29 +53,42 @@ class _FollowersScreenState extends State<FollowingScreen> {
           SizedBox(height: 2,),
           Expanded(
             child: ListView.builder(
-              itemCount: followingList.length,
+              itemCount: following.length,
               itemBuilder: (context, index) {
                 return Row(
                   children: [
-                    followingList[index].photoUrl != ''
-                        ? CircleAvatar(
-                      backgroundColor: Colors.grey,
-                      backgroundImage: NetworkImage(
-                        followingList[index].photoUrl,
-                      ),
-                      radius: 40,
-                    )
-                        : const CircleAvatar(
-                      backgroundColor: Colors.grey,
-                      radius: 40,
-                      child: Icon(
-                        Icons.person,
-                        color: Colors.white,
-                        size: 40,
-                      ),
-                    ),
+                    following[index].photoUrl != ''
+                        ? Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: SizedBox(
+                                                width: 40,
+                            height: 40
+                            ,child: CircleAvatar(
+
+                                                  backgroundColor: Colors.grey,
+                                                  backgroundImage: NetworkImage(
+
+                            following[index].photoUrl,
+                                                  ),
+                                                  radius: 50,
+                                                ),
+                          ),
+                        )
+                        : SizedBox(
+                      height: 40,
+                          width: 40
+                          ,child: const CircleAvatar(
+                                                backgroundColor: Colors.grey,
+                                                radius: 50,
+                                                child: Icon(
+                          Icons.person,
+                          color: Colors.white,
+                          size: 40,
+                                                ),
+                                              ),
+                        ),
                     SizedBox(width: 20,),
-                    Text(followingList[index].username)
+                    Text(following[index].username)
                   ],
                 );
               },
@@ -124,4 +99,24 @@ class _FollowersScreenState extends State<FollowingScreen> {
       ),
     );
   }
+}
+Future<List<model.User>> getFollowers(String userId) async {
+  List<model.User> followers = [];
+  try {
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    if (userDoc.exists) {
+      Map<String, dynamic> data = userDoc.data() as Map<String, dynamic>;
+      List<String> followerIds = List<String>.from(data['following']);
+
+      for (String followerId in followerIds) {
+        DocumentSnapshot followerDoc = await FirebaseFirestore.instance.collection('users').doc(followerId).get();
+        if (followerDoc.exists) {
+          followers.add(model.User.fromSnap(followerDoc));
+        }
+      }
+    }
+  } catch (e) {
+    print("Error fetching following: $e");
+  }
+  return followers;
 }

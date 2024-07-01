@@ -75,19 +75,19 @@ class _LoginScreenState extends State<LoginScreen> {
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Flexible(
                 flex: 2,
                 child: Container(),
               ),
-              SvgPicture.asset(
-                'assets/ic_instagram.svg',
-                color: primaryColor,
-                height: 64,
-              ),
-              const SizedBox(
-                height: 64,
-              ),
+              // SvgPicture.asset(
+              //   height: 200,
+              //   width: 200,
+              //   'as',
+              // ),
+              Image.asset("assets/Screenshot 2024-07-01 194917.png",height: 400,width: 300,),
+
               TextFieldInput(
                 hintText: 'Enter your email',
                 textInputType: TextInputType.emailAddress,
@@ -119,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(4)),
                     ),
-                    color: primaryColor,
+                    color: Color.fromRGBO(229, 184, 61, 1.0),
                   ),
                   child: !_isLoading
                       ? const Text(
@@ -164,6 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: const Text(
                         ' Signup.',
                         style: TextStyle(
+                          color: Color.fromRGBO(229, 184, 61, 1.0),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -198,26 +199,22 @@ class _LoginScreenState extends State<LoginScreen> {
   //   }
   // }
 
-Future<void>login()async{
-  var request = http.MultipartRequest('POST', Uri.parse('http://127.0.0.1:8000/api/auth/login'));
-  request.fields.addAll({
-    'password': _passwordController.text,
-    'email': _emailController.text
-  });
+  Future<void> login() async {
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('http://127.0.0.1:8000/api/auth/login'));
+    request.fields.addAll(
+        {'password': _passwordController.text, 'email': _emailController.text});
 
+    http.StreamedResponse response = await request.send();
 
-  http.StreamedResponse response = await request.send();
-
-  if (response.statusCode == 200) {
-    var data = json.decode(await response.stream.bytesToString());
-    String token = data['access_token'];
-    String id = data['user']['id'];
-    _launchUrl("http://127.0.0.1:3000/home/$token/$id");
-    print(await response.stream.bytesToString());
+    if (response.statusCode == 200) {
+      var data = json.decode(await response.stream.bytesToString());
+      String token = data['access_token'];
+      String id = data['user']['id'];
+      _launchUrl("http://127.0.0.1:3000/home/$token/$id");
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
   }
-  else {
-    print(response.reasonPhrase);
-  }
-
-}
 }

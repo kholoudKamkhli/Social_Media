@@ -64,44 +64,37 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
         centerTitle: false,
-        title: SvgPicture.asset(
-          'assets/ic_instagram.svg',
-          color: primaryColor,
-          height: 32,
+        title: Image.asset(
+          'assets/glowyyy-removebg-preview.png',
+          height: 80,
         ),
         actions: [
           IconButton(
             icon: Icon(
               Icons.home,
-              color: _page == 0 ? primaryColor : secondaryColor,
+              color: _page == 0 ? Color.fromRGBO(229, 184, 61, 1.0) : secondaryColor,
             ),
             onPressed: () => navigationTapped(0),
           ),
           IconButton(
             icon: Icon(
               Icons.search,
-              color: _page == 1 ? primaryColor : secondaryColor,
+              color: _page == 1 ? Color.fromRGBO(229, 184, 61, 1.0) : secondaryColor,
             ),
             onPressed: () => navigationTapped(1),
           ),
           IconButton(
             icon: Icon(
               Icons.add_a_photo,
-              color: _page == 2 ? primaryColor : secondaryColor,
+              color: _page == 2 ? Color.fromRGBO(229, 184, 61, 1.0) : secondaryColor,
             ),
             onPressed: () => navigationTapped(2),
           ),
-          IconButton(
-            icon: Icon(
-              Icons.favorite,
-              color: _page == 3 ? primaryColor : secondaryColor,
-            ),
-            onPressed: () => navigationTapped(3),
-          ),
+
           IconButton(
             icon: Icon(
               Icons.person,
-              color: _page == 4 ? primaryColor : secondaryColor,
+              color: _page == 3 ? Color.fromRGBO(229, 184, 61, 1.0) : secondaryColor,
             ),
             onPressed: () => navigationTapped(4),
           ),
