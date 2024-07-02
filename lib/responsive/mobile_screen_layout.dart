@@ -1,10 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone_flutter/utils/colors.dart';
-import 'package:instagram_clone_flutter/utils/global_variable.dart';
 
-import '../di/di.dart';
-import '../resources/auth_methods.dart';
+import '../main.dart';
 import '../screens/add_post_screen.dart';
 import '../screens/feed_screen.dart';
 import '../screens/profile_screen.dart';
@@ -44,26 +43,26 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
     pageController.jumpToPage(page);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    var authMethods = getIt<AuthMethods>();
-    List<Widget> homeScreenItems = [
-      const FeedScreen(),
-      const SearchScreen(),
-      const AddPostScreen(),
-      Container(
-        color: mobileBackgroundColor,
-        child: const Center(
-          child: Text(
-            'Favorite',
-            style: TextStyle(color: primaryColor),
-          ),
+  List<Widget> homeScreenItems = [
+    const FeedScreen(),
+    const SearchScreen(),
+    const AddPostScreen(),
+    Container(
+      color: mobileBackgroundColor,
+      child: const Center(
+        child: Text(
+          'Favorite',
+          style: TextStyle(color: primaryColor),
         ),
       ),
-      ProfileScreen(
-        uid: authMethods.user!.uid,
-      ),
-    ];
+    ),
+    ProfileScreen(
+      uid: FirebaseAuth.instance.currentUser!.uid,
+    ),
+  ];
+  @override
+  Widget build(BuildContext context) {
+    mq = MediaQuery.of(context).size;
 
     return Scaffold(
       body: PageView(

@@ -87,9 +87,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     leading: CircleAvatar(
                       backgroundImage: photoUrl.isNotEmpty
                           ? NetworkImage(photoUrl)
-                          :
-                         AssetImage('assets/l60Hf.png'),
-                      radius: 16,
+                          : const NetworkImage('https://plus.unsplash.com/premium_photo-1677252438425-e4125f74fbbe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D'),
+                            radius: 16,
                     ),
                     title: Text(
                       userData['username'],
