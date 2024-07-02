@@ -150,7 +150,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
             body: Column(
               children: <Widget>[
                 isLoading
-                    ? const LinearProgressIndicator()
+                    ? const LinearProgressIndicator(color: Color.fromRGBO(229, 184, 61, 1.0),)
                     : const Padding(padding: EdgeInsets.only(top: 0.0)),
                 const Divider(),
                 Row(

@@ -4,6 +4,8 @@ import 'package:instagram_clone_flutter/models/post.dart';
 import 'package:instagram_clone_flutter/resources/storage_methods.dart';
 import 'package:uuid/uuid.dart';
 
+import '../models/message.dart';
+
 class FireStoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -123,5 +125,42 @@ class FireStoreMethods {
     } catch (e) {
       if (kDebugMode) print(e.toString());
     }
+  }
+  Future<void> addMessage(Message message) async {
+    try {
+      await _firestore.collection(Message.COLLECTION_NAME).add(message.toJson());
+    } catch (e) {
+      print("Error adding message: $e");
+    }
+  }
+}
+class FirestoreService {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<void> addMessage(Message message) async {
+    try {
+      await _firestore.collection(Message.COLLECTION_NAME).add(message.toJson());
+    } catch (e) {
+      print("Error adding message: $e");
+    }
+  }
+
+  Future<List<Message>> getMessagesBetweenUsers(String userId1, String userId2) async {
+    List<Message> messages = [];
+    try {
+      QuerySnapshot querySnapshot = await _firestore
+          .collection(Message.COLLECTION_NAME)
+          .where('senderId', whereIn: [userId1, userId2])
+          .where('recieverId', whereIn: [userId1, userId2])
+          .orderBy('dateTime')
+          .get();
+
+      for (var doc in querySnapshot.docs) {
+        messages.add(Message.fromJson(doc.data() as Map<String, dynamic>));
+      }
+    } catch (e) {
+      print("Error getting messages: $e");
+    }
+    return messages;
   }
 }

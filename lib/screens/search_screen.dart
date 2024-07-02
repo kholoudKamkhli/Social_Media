@@ -87,9 +87,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     leading: CircleAvatar(
                       backgroundImage: photoUrl.isNotEmpty
                           ? NetworkImage(photoUrl)
-                          : null,
+                          :
+                         AssetImage('assets/l60Hf.png'),
                       radius: 16,
-                      child: photoUrl.isEmpty ? Icon(Icons.person) : null,
                     ),
                     title: Text(
                       userData['username'],
