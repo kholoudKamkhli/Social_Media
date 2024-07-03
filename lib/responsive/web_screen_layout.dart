@@ -96,7 +96,7 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
               Icons.person,
               color: _page == 3 ? Color.fromRGBO(229, 184, 61, 1.0) : secondaryColor,
             ),
-            onPressed: () => navigationTapped(4),
+            onPressed: () => navigationTapped(3),
           ),
         ],
       ),
