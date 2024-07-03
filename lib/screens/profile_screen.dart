@@ -3,7 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone_flutter/resources/auth_methods.dart';
 import 'package:instagram_clone_flutter/resources/firestore_methods.dart';
-import 'package:instagram_clone_flutter/screens/chat_screen.dart';
+import 'package:instagram_clone_flutter/screens/chat/models/chat_user.dart';
+import 'package:instagram_clone_flutter/screens/chat/screens/chat_screen.dart';
 import 'package:instagram_clone_flutter/screens/followers_screen.dart';
 import 'package:instagram_clone_flutter/screens/login_screen.dart';
 import 'package:instagram_clone_flutter/utils/colors.dart';
@@ -12,6 +13,9 @@ import 'package:instagram_clone_flutter/widgets/follow_button.dart';
 import 'package:instagram_clone_flutter/models/user.dart' as model;
 
 import '../models/user.dart';
+import 'chat/api/apis.dart';
+import 'chat/helper/dialogs.dart';
+import 'chat/screens/home_screen.dart';
 import 'following_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -221,20 +225,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       },
                                                     ),
                                               FollowButton(
-                                                  function: () {
+                                                  function: () async {
+                                                    // Navigator.push(
+                                                    //   context,
+                                                    //   MaterialPageRoute(
+                                                    //       builder: (context) =>
+                                                    //           ChatScreen(
+                                                    //             userId1: FirebaseAuth
+                                                    //                 .instance
+                                                    //                 .currentUser!
+                                                    //                 .uid,
+                                                    //             userId2:
+                                                    //                 widget.uid,
+                                                    //           )),
+                                                    // );
+                                                    // Navigator.push(
+                                                    //     context,
+                                                    //     MaterialPageRoute(
+                                                    //         builder: (context) =>
+                                                    //         const HomeChat()));
                                                     Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ChatScreen(
-                                                                userId1: FirebaseAuth
-                                                                    .instance
-                                                                    .currentUser!
-                                                                    .uid,
-                                                                userId2:
-                                                                    widget.uid,
-                                                              )),
-                                                    );
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (_) => ChatScreen(user:ChatUser(image: userData['photoUrl'], about: userData['bio'], name:userData['username'] , createdAt: userData["created_at"], isOnline: userData["is_online"], id: userData["id"], lastActive: userData["last_active"], email: userData["email"], pushToken:userData["push_token"] ) )));
+                                                    await APIs.addChatUser(userData['email'])
+                                                        .then((value) {
+                                                      if (!value) {
+                                                        Dialogs.showSnackbar(
+                                                            context, 'User does not Exists!');
+                                                      }
+                                                    });
                                                   },
                                                   backgroundColor:
                                                       const Color.fromRGBO(

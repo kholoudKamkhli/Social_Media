@@ -36,6 +36,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   setState(() {
                     _file = file;
                   });
+
                 }),
             SimpleDialogOption(
               padding: const EdgeInsets.all(20),

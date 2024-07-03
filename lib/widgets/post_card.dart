@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone_flutter/models/user.dart' as model;
 import 'package:instagram_clone_flutter/providers/user_provider.dart';
@@ -112,7 +113,7 @@ class _PostCardState extends State<PostCard> {
                     ),
                   ),
                 ),
-                widget.snap['uid'].toString() == user.uid
+                widget.snap['uid'].toString() == FirebaseAuth.instance.currentUser!.uid
                     ? IconButton(
                   onPressed: () {
                     showDialog(

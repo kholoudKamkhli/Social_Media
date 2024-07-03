@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../main.dart';
+import '../../../responsive/mobile_screen_layout.dart';
+import '../../../responsive/responsive_layout.dart';
+import '../../../responsive/web_screen_layout.dart';
 import '../api/apis.dart';
 import '../models/chat_user.dart';
 import '../widgets/chat_user_card.dart';
@@ -72,14 +75,17 @@ class _HomeChatState extends State<HomeChat> {
           }
         },
         child: Scaffold(
-          backgroundColor: const Color(0xfffe92f30),
+          backgroundColor: const Color.fromRGBO(229, 184, 61, 1.0),
           appBar: AppBar(
             leading: InkWell(
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ResponsiveLayout(
+                    mobileScreenLayout: MobileScreenLayout(),
+                    webScreenLayout: WebScreenLayout(),
+                  )));
                 },
                 child: const Icon(Icons.arrow_back)),
-            backgroundColor: const Color(0xfffe92f30),
+            backgroundColor: const Color.fromRGBO(229, 184, 61, 1.0),
             centerTitle: false,
             elevation: 0,
             title: _isSearching
@@ -187,8 +193,7 @@ class _HomeChatState extends State<HomeChat> {
                                   });
                             } else {
                               return const Center(
-                                child: Text('No Connections Found!',
-                                    style: TextStyle(fontSize: 20)),
+                                child: CircularProgressIndicator(color: Color.fromRGBO(229, 184, 61, 1.0),)
                               );
                             }
                         }

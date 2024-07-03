@@ -33,18 +33,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var authMethods = getIt<AuthMethods>();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Instagram Clone',
+        title: 'Glowified Skin',
           theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: mobileBackgroundColor,
         ),
-        home:const LoginScreen()
+        home:FirebaseAuth.instance.currentUser !=null? const ResponsiveLayout(
+          mobileScreenLayout: MobileScreenLayout(),
+          webScreenLayout: WebScreenLayout(),
+        ):const LoginScreen()
       ),
     );
   }

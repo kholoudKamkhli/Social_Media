@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_clone_flutter/screens/chat/screens/home_screen.dart';
 import 'package:instagram_clone_flutter/screens/followers_screen.dart';
 import 'package:instagram_clone_flutter/screens/following_screen.dart';
 import 'package:instagram_clone_flutter/utils/colors.dart';
 import 'package:instagram_clone_flutter/utils/global_variable.dart';
 
 import '../di/di.dart';
+import '../main.dart';
 import '../resources/auth_methods.dart';
 import '../screens/add_post_screen.dart';
 import '../screens/feed_screen.dart';
@@ -48,18 +51,19 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
       _page = page;
     });
   }
-
+  List<Widget> homeScreenItems = [
+    const FeedScreen(),
+    const SearchScreen(),
+    const AddPostScreen(),
+    ProfileScreen(
+      uid:FirebaseAuth.instance.currentUser!.uid,
+    ),
+    const HomeChat(),
+  ];
   @override
   Widget build(BuildContext context) {
-    var authMethods = getIt<AuthMethods>();
-    List<Widget> homeScreenItems = [
-      const FeedScreen(),
-      const SearchScreen(),
-      const AddPostScreen(),
-      ProfileScreen(
-        uid: authMethods.user!.uid,
-      ),
-    ];
+    mq = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
@@ -97,6 +101,13 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
               color: _page == 3 ? Color.fromRGBO(229, 184, 61, 1.0) : secondaryColor,
             ),
             onPressed: () => navigationTapped(3),
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.chat,
+              color: _page == 4 ? Color.fromRGBO(229, 184, 61, 1.0) : secondaryColor,
+            ),
+            onPressed: () => navigationTapped(4),
           ),
         ],
       ),

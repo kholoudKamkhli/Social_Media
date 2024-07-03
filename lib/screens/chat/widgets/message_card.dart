@@ -45,14 +45,12 @@ class _MessageCardState extends State<MessageCard> {
         //message content
         Flexible(
           child: Container(
-            padding: EdgeInsets.all(widget.message.type == Type.image
-                ? mq.width * .03
-                : mq.width * .04),
+            padding: EdgeInsets.all(8),
             margin: EdgeInsets.symmetric(
                 horizontal: mq.width * .04, vertical: mq.height * .01),
             decoration: const BoxDecoration(
-                // color: Color(0xfffe92f30),
 
+                color: Colors.grey,
                 //making borders curved
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
@@ -98,7 +96,7 @@ class _MessageCardState extends State<MessageCard> {
     print(widget.message.type);
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         //message time
         Row(
@@ -111,7 +109,7 @@ class _MessageCardState extends State<MessageCard> {
               const Icon(Icons.done_all_rounded, color: Colors.blue, size: 20),
 
             //for adding some space
-            const SizedBox(width: 2),
+            const SizedBox(width: 12),
 
             //sent time
             Text(
@@ -125,13 +123,11 @@ class _MessageCardState extends State<MessageCard> {
         //message content
         Flexible(
           child: Container(
-            padding: EdgeInsets.all(widget.message.type == Type.image
-                ? mq.width * .03
-                : mq.width * .04),
+            padding: EdgeInsets.all(8),
             margin: EdgeInsets.symmetric(
                 horizontal: mq.width * .04, vertical: mq.height * .01),
             decoration: BoxDecoration(
-                color: Theme.of(context).splashColor,
+                color: Color.fromRGBO(229, 184, 61, 1.0),
                 border: Border.all(color: Colors.white),
                 //making borders curved
                 borderRadius: const BorderRadius.only(

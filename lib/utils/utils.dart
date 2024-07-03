@@ -8,6 +8,7 @@ pickImage(ImageSource source) async {
   if (file != null) {
     return await file.readAsBytes();
   }
+
 }
 
 // for displaying snackbars

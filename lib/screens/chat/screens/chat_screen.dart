@@ -56,11 +56,11 @@ class _ChatScreenState extends State<ChatScreen> {
             }
           },
           child: Scaffold(
-            backgroundColor: const Color(0xfffe92f30),
+            backgroundColor: const Color.fromRGBO(229, 184, 61, 1.0),
             //app bar
             appBar: AppBar(
               elevation: 0,
-              backgroundColor: const Color(0xfffe92f30),
+              backgroundColor: const Color.fromRGBO(229, 184, 61, 1.0),
               automaticallyImplyLeading: false,
               flexibleSpace: _appBar(),
               actions: [
@@ -71,9 +71,9 @@ class _ChatScreenState extends State<ChatScreen> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            backgroundColor: const Color(0xfffe92f30),
+                            backgroundColor: Colors.white,
                             title: Image.asset(
-                              'assets/images/logo_text.png',
+                              'assets/glowyyy-removebg-preview.png',
                               height: 50,
                             ),
                             content: Column(
@@ -129,8 +129,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                                     const ShapeDecoration(
                                                   gradient:
                                                       LinearGradient(colors: [
-                                                    Color(0xffE4B16C),
-                                                    Color(0xffDE5D76),
+                                                    Color(0xffffffff),
+                                                    Color(0xffefc643),
                                                   ]),
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
@@ -176,8 +176,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                                     const ShapeDecoration(
                                                   gradient:
                                                       LinearGradient(colors: [
-                                                    Color(0xffE4B16C),
-                                                    Color(0xffDE5D76),
+                                                    Color(0xffffffff),
+                                                    Color(0xffefc643),
                                                   ]),
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
@@ -272,7 +272,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         child: Padding(
                             padding: EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 20),
-                            child: CircularProgressIndicator(strokeWidth: 2))),
+                            child: CircularProgressIndicator(strokeWidth: 2,color:Color.fromRGBO(229, 184, 61, 1.0),))),
 
                   //chat input filed
                   StreamBuilder(
@@ -298,7 +298,9 @@ class _ChatScreenState extends State<ChatScreen> {
                           }
                         } else {
                           return const Center(
-                            child: CircularProgressIndicator(),
+                            child: CircularProgressIndicator(
+                              color: Color.fromRGBO(229, 184, 61, 1.0),
+                            ),
                           );
                         }
                       }),
@@ -414,7 +416,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         setState(() => _showEmoji = !_showEmoji);
                       },
                       icon: const Icon(Icons.emoji_emotions,
-                          color: Color(0xfffe92f30), size: 30)),
+                          color: Color.fromRGBO(229, 184, 61, 1.0), size: 30)),
 
                   Expanded(
                       child: TextFormField(
@@ -449,27 +451,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         }
                       },
                       icon: const Icon(Icons.image,
-                          color: Color(0xfffe92f30), size: 30)),
-
-                  //take image from camera button
-                  IconButton(
-                      onPressed: () async {
-                        final ImagePicker picker = ImagePicker();
-
-                        // Pick an image
-                        final XFile? image = await picker.pickImage(
-                            source: ImageSource.camera, imageQuality: 70);
-                        if (image != null) {
-                          log('Image Path: ${image.path}');
-                          setState(() => _isUploading = true);
-
-                          await APIs.sendChatImage(
-                              widget.user, File(image.path));
-                          setState(() => _isUploading = false);
-                        }
-                      },
-                      icon: const Icon(Icons.camera_alt_rounded,
-                          color: Color(0xfffe92f30), size: 30)),
+                          color: Color.fromRGBO(229, 184, 61, 1.0), size: 30)),
 
                   //adding some space
                   SizedBox(width: mq.width * .02),
@@ -477,7 +459,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
           ),
-
+          SizedBox(width: 3,),
           //send message button
           MaterialButton(
             onPressed: () {
@@ -500,7 +482,7 @@ class _ChatScreenState extends State<ChatScreen> {
             shape: const CircleBorder(),
             color: Colors.white,
             child: Icon(Icons.send,
-                color: Theme.of(context).primaryColor, size: 28),
+                color: Color.fromRGBO(229, 184, 61, 1.0), size: 28),
           )
         ],
       ),

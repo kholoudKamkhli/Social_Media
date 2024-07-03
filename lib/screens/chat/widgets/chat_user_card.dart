@@ -28,7 +28,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.symmetric(horizontal: mq.width * .04, vertical: 4),
-      color: Colors.grey,
+      color: Color.fromRGBO(229, 184, 61, 1.0).withOpacity(0.4),
       elevation: 0.5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: InkWell(
