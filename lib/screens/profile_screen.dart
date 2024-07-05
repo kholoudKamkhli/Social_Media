@@ -125,6 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     buildStatColumn(postLen, "posts"),
                                     InkWell(
                                         onTap: () {
+                                          print('dddddd');
 
                                           Navigator.push(
                                               context,

@@ -14,7 +14,7 @@ import 'package:instagram_clone_flutter/widgets/text_field_input.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'dart:js' as js;
 import '../main.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
     String res = await AuthMethods().loginUser(
         email: _emailController.text, password: _passwordController.text);
     if (res == 'success') {
-      // await login();
+      await login();
       if (context.mounted) {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
@@ -207,14 +207,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (response.statusCode == 200) {
       var data = json.decode(await response.stream.bytesToString());
+      print("fdbgbfgbgn");
+      print(data);
       String token = data['access_token'];
-      String id = data['user']['id'];
-      pref.setString("id", id);
+      String id = data['user']['id'].toString();
+      pref.setString("id", id.toString());
       pref.setString("access_token", token);
-      print(await response.stream.bytesToString());
+      print(pref.getString("id"));
+      print(pref.getString("access_token"));
     }
     else {
-      print(response.reasonPhrase);
     }
 
   }
