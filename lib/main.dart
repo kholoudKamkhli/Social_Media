@@ -9,22 +9,19 @@ import 'package:instagram_clone_flutter/responsive/web_screen_layout.dart';
 import 'package:instagram_clone_flutter/screens/login_screen.dart';
 import 'package:instagram_clone_flutter/utils/colors.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'di/di.dart';
 import 'firebase_options.dart';
 
 late Size mq;
-
+late SharedPreferences pref;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  configureDependencies();
+   pref = await SharedPreferences.getInstance();
 
-  var obj = getIt<AuthMethods>();
-  await obj.signOut();
-  await obj.getuser();
   runApp(const MyApp());
 }
 

@@ -54,6 +54,7 @@ class User {
     'spam': false,
     'blockedByUsers': [],
     'usersBlocked': [],
+    'type':'user',
     'services': [],
     'groups': [],
     'groups_posts': []

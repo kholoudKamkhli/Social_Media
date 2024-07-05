@@ -87,6 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: CircularProgressIndicator(),
           )
         : Scaffold(
+            backgroundColor: Colors.white,
             body: ListView(
               children: [
                 Padding(
@@ -124,7 +125,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     buildStatColumn(postLen, "posts"),
                                     InkWell(
                                         onTap: () {
-                                          print('dddddd');
 
                                           Navigator.push(
                                               context,
@@ -261,7 +261,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                           229, 184, 61, 1.0),
                                                   borderColor: const Color.fromRGBO(
                                                       229, 184, 61, 1.0),
-                                                  text: "Message",
+                                                  text: userData['type'] == "doctor"?"Consult":"Message",
                                                   textColor: Colors.white),
                                             ],
                                           )
@@ -278,7 +278,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           top: 15,
                         ),
                         child: Text(
-                          userData['username'],
+                          userData['type'] == "doctor"?"${userData['username']} (Doctor)":userData['username'],
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),

@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:http/http.dart' as http;
-import 'package:instagram_clone_flutter/di/di.dart';
 import 'package:instagram_clone_flutter/resources/auth_methods.dart';
 import 'package:instagram_clone_flutter/responsive/mobile_screen_layout.dart';
 import 'package:instagram_clone_flutter/responsive/responsive_layout.dart';
@@ -13,8 +11,11 @@ import 'package:instagram_clone_flutter/utils/colors.dart';
 import 'package:instagram_clone_flutter/utils/global_variable.dart';
 import 'package:instagram_clone_flutter/utils/utils.dart';
 import 'package:instagram_clone_flutter/widgets/text_field_input.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../main.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -27,38 +28,42 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
 
-  Future<void> loginUser() async {
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+  }
+
+  void loginUser() async {
     setState(() {
       _isLoading = true;
     });
-    var auth_mods = getIt<AuthMethods>();
-    print("hiiiiiiiiiiiiiiii");
-    String res = await auth_mods.loginUser(
-      email: _emailController.text,
-      password: _passwordController.text,
-    );
-
-    if (!mounted) return; // Check if the widget is still mounted
-
+    String res = await AuthMethods().loginUser(
+        email: _emailController.text, password: _passwordController.text);
     if (res == 'success') {
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => const ResponsiveLayout(
-            mobileScreenLayout: MobileScreenLayout(),
-            webScreenLayout: WebScreenLayout(),
-          ),
-        ),
-        (route) => false,
-      );
+      // await login();
+      if (context.mounted) {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) => const ResponsiveLayout(
+                mobileScreenLayout: MobileScreenLayout(),
+                webScreenLayout: WebScreenLayout(),
+              ),
+            ),
+                (route) => false);
 
-      setState(() {
-        _isLoading = false;
-      });
+        setState(() {
+          _isLoading = false;
+        });
+      }
     } else {
       setState(() {
         _isLoading = false;
       });
-      showSnackBar(context, res);
+      if (context.mounted) {
+        showSnackBar(context, res);
+      }
     }
   }
 
@@ -70,24 +75,24 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Container(
           padding: MediaQuery.of(context).size.width > webScreenSize
               ? EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width / 3)
+              horizontal: MediaQuery.of(context).size.width / 3)
               : const EdgeInsets.symmetric(horizontal: 32),
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Flexible(
                 flex: 2,
                 child: Container(),
               ),
-              // SvgPicture.asset(
-              //   height: 200,
-              //   width: 200,
-              //   'as',
-              // ),
-              Image.asset("assets/Screenshot 2024-07-01 194917.png",height: 400,width: 300,),
-
+              SvgPicture.asset(
+                'assets/ic_instagram.svg',
+                color: primaryColor,
+                height: 64,
+              ),
+              const SizedBox(
+                height: 64,
+              ),
               TextFieldInput(
                 hintText: 'Enter your email',
                 textInputType: TextInputType.emailAddress,
@@ -106,11 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 24,
               ),
               InkWell(
-                onTap: () async {
-                  await loginUser();
-                  await login();
-                  print(getIt<AuthMethods>().user!.uid);
-                },
+                onTap: loginUser,
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,
@@ -123,15 +124,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   child: !_isLoading
                       ? const Text(
-                          'Log in',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
+                    'Log in',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  )
                       : const CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
+                    color: Colors.white,
+                  ),
                 ),
               ),
               const SizedBox(
@@ -156,16 +156,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         builder: (context) => const SignupScreen(),
                       ),
                     ),
-                    // onTap: () async{
-                    //   await login();
-                    // },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: const Text(
                         ' Signup.',
                         style: TextStyle(
-                          color: Color.fromRGBO(229, 184, 61, 1.0),
                           fontWeight: FontWeight.bold,
+                          color: Color(0xffe5b83d),
                         ),
                       ),
                     ),
@@ -178,7 +175,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
   Future<void> _launchUrl(String url) async {
     if (!await launchUrl(Uri.parse(url))) {
       throw Exception('Could not launch ');
@@ -199,11 +195,13 @@ class _LoginScreenState extends State<LoginScreen> {
   //   }
   // }
 
-  Future<void> login() async {
-    var request = http.MultipartRequest(
-        'POST', Uri.parse('http://127.0.0.1:8000/api/auth/login'));
-    request.fields.addAll(
-        {'password': _passwordController.text, 'email': _emailController.text});
+  Future<void>login()async{
+    var request = http.MultipartRequest('POST', Uri.parse('http://127.0.0.1:8000/api/auth/login'));
+    request.fields.addAll({
+      'password': _passwordController.text,
+      'email': _emailController.text
+    });
+
 
     http.StreamedResponse response = await request.send();
 
@@ -211,10 +209,14 @@ class _LoginScreenState extends State<LoginScreen> {
       var data = json.decode(await response.stream.bytesToString());
       String token = data['access_token'];
       String id = data['user']['id'];
-      _launchUrl("http://127.0.0.1:3000/home/$token/$id");
+      pref.setString("id", id);
+      pref.setString("access_token", token);
       print(await response.stream.bytesToString());
-    } else {
+    }
+    else {
       print(response.reasonPhrase);
     }
+
   }
 }
+
