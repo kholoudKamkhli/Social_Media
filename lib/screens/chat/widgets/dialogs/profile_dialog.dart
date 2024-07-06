@@ -65,7 +65,7 @@ class ProfileDialog extends StatelessWidget {
                     padding: const EdgeInsets.all(0),
                     shape: const CircleBorder(),
                     child: const Icon(Icons.close_fullscreen,
-                        color: Color(0xfffe92f30), size: 30),
+                        color: Color.fromARGB(255, 40, 167, 69), size: 30),
                   ))
             ],
           )),

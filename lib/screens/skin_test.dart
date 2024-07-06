@@ -30,6 +30,7 @@ class SkinTestState extends State<SkinTest> {
     print("http://127.0.0.1:3000/skintest/${pref.getString("access_token")}/${pref.getString("id")}");
 
     return Scaffold(
+      backgroundColor: Colors.white,
 
       body: PlatformWebViewWidget(
         PlatformWebViewWidgetCreationParams(controller: _controller),

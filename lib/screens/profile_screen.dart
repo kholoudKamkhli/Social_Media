@@ -83,9 +83,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     print("the user id is ${widget.uid}");
     return isLoading
-        ? const Center(
-            child: CircularProgressIndicator(),
-          )
+        ? Container(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        color: Colors.white,
+      ),
+          child: const Center(
+              child: CircularProgressIndicator(color: const Color.fromARGB(255, 40, 167, 69),),
+            ),
+        )
         : Scaffold(
             backgroundColor: Colors.white,
             body: ListView(
@@ -151,6 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             following, "following")),
                                   ],
                                 ),
+                                SizedBox(height: 20,),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
@@ -159,11 +167,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             widget.uid
                                         ? FollowButton(
                                             text: 'Sign Out',
-                                            backgroundColor: const Color.fromRGBO(
-                                                229, 184, 61, 1.0),
+                                            backgroundColor:
+                                            const Color.fromARGB(255, 40, 167, 69),
                                             textColor: Colors.white,
-                                            borderColor: const Color.fromRGBO(
-                                                229, 184, 61, 1.0),
+                                            borderColor: const Color.fromARGB(255, 40, 167, 69),
                                             function: () async {
                                               await AuthMethods().signOut();
                                               if (context.mounted) {
@@ -186,8 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                           Colors.white,
                                                       textColor: Colors.black,
                                                       borderColor:
-                                                          const Color.fromRGBO(229,
-                                                              184, 61, 1.0),
+                                                      const Color.fromARGB(255, 40, 167, 69),
                                                       function: () async {
                                                         await FireStoreMethods()
                                                             .followUser(
@@ -205,12 +211,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   : FollowButton(
                                                       text: 'Follow',
                                                       backgroundColor:
-                                                          const Color.fromRGBO(229,
-                                                              184, 61, 1.0),
+                                                      const Color.fromARGB(255, 40, 167, 69),
                                                       textColor: Colors.white,
                                                       borderColor:
-                                                          const Color.fromRGBO(229,
-                                                              184, 61, 1.0),
+                                                      const Color.fromARGB(255, 40, 167, 69),
                                                       function: () async {
                                                         await FireStoreMethods()
                                                             .followUser(
@@ -227,45 +231,58 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     ),
                                               FollowButton(
                                                   function: () async {
-                                                    // Navigator.push(
-                                                    //   context,
-                                                    //   MaterialPageRoute(
-                                                    //       builder: (context) =>
-                                                    //           ChatScreen(
-                                                    //             userId1: FirebaseAuth
-                                                    //                 .instance
-                                                    //                 .currentUser!
-                                                    //                 .uid,
-                                                    //             userId2:
-                                                    //                 widget.uid,
-                                                    //           )),
-                                                    // );
-                                                    // Navigator.push(
-                                                    //     context,
-                                                    //     MaterialPageRoute(
-                                                    //         builder: (context) =>
-                                                    //         const HomeChat()));
+
                                                     Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
-                                                            builder: (_) => ChatScreen(user:ChatUser(image: userData['photoUrl'], about: userData['bio'], name:userData['username'] , createdAt: userData["created_at"], isOnline: userData["is_online"], id: userData["id"], lastActive: userData["last_active"], email: userData["email"], pushToken:userData["push_token"] ) )));
-                                                    await APIs.addChatUser(userData['email'])
+                                                            builder: (_) => ChatScreen(
+                                                                user: ChatUser(
+                                                                    image: userData[
+                                                                        'photoUrl'],
+                                                                    about: userData[
+                                                                        'bio'],
+                                                                    name: userData[
+                                                                        'username'],
+                                                                    createdAt:
+                                                                        userData[
+                                                                            "created_at"],
+                                                                    isOnline:
+                                                                        userData[
+                                                                            "is_online"],
+                                                                    id: userData[
+                                                                        "id"],
+                                                                    lastActive:
+                                                                        userData[
+                                                                            "last_active"],
+                                                                    email: userData[
+                                                                        "email"],
+                                                                    pushToken:
+                                                                        userData[
+                                                                            "push_token"]))));
+                                                    await APIs.addChatUser(
+                                                            userData['email'])
                                                         .then((value) {
                                                       if (!value) {
                                                         Dialogs.showSnackbar(
-                                                            context, 'User does not Exists!');
+                                                            context,
+                                                            'User does not Exists!');
                                                       }
                                                     });
                                                   },
                                                   backgroundColor:
-                                                      const Color.fromRGBO(
-                                                          229, 184, 61, 1.0),
-                                                  borderColor: const Color.fromRGBO(
-                                                      229, 184, 61, 1.0),
-                                                  text: userData['type'] == "doctor"?"Consult":"Message",
+                                                      const Color.fromARGB(
+                                                          255, 40, 167, 69),
+                                                  borderColor:
+                                                      const Color.fromARGB(
+                                                          255, 40, 167, 69),
+                                                  text: userData['type'] ==
+                                                          "doctor"
+                                                      ? "Consult"
+                                                      : "Message",
                                                   textColor: Colors.white),
                                             ],
-                                          )
+                                          ),
+
                                   ],
                                 ),
                               ],
@@ -279,7 +296,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           top: 15,
                         ),
                         child: Text(
-                          userData['type'] == "doctor"?"${userData['username']} (Doctor)":userData['username'],
+                          userData['type'] == "doctor"
+                              ? "${userData['username']} (Doctor)"
+                              : userData['username'],
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -306,7 +325,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(color: const Color.fromARGB(255, 40, 167, 69),),
                       );
                     }
 

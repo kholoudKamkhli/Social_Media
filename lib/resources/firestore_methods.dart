@@ -11,8 +11,7 @@ class FireStoreMethods {
 
   Future<String> uploadPost(String description, Uint8List file, String uid,
       String username, String profImage) async {
-    // asking uid here because we dont want to make extra calls to firebase auth when we can just get from our state management
-    String res = "Some error occurred";
+    String message = "Error occurred, Please Try Again";
     try {
       String photoUrl =
           await StorageMethods().uploadImageToStorage('posts', file, true);
@@ -28,11 +27,11 @@ class FireStoreMethods {
         profImage: profImage,
       );
       _firestore.collection('posts').doc(postId).set(post.toJson());
-      res = "success";
+      message = "success";
     } catch (err) {
-      res = err.toString();
+      message = err.toString();
     }
-    return res;
+    return message;
   }
 
   Future<String> likePost(String postId, String uid, List likes) async {

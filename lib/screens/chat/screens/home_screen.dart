@@ -75,7 +75,7 @@ class _HomeChatState extends State<HomeChat> {
           }
         },
         child: Scaffold(
-          backgroundColor: const Color.fromRGBO(229, 184, 61, 1.0),
+          backgroundColor: const Color.fromARGB(255, 40, 167, 69),
           appBar: AppBar(
             leading: InkWell(
                 onTap: () {
@@ -84,14 +84,15 @@ class _HomeChatState extends State<HomeChat> {
                     webScreenLayout: WebScreenLayout(),
                   )));
                 },
-                child: const Icon(Icons.arrow_back)),
-            backgroundColor: const Color.fromRGBO(229, 184, 61, 1.0),
+                child: const Icon(Icons.arrow_back,color: Colors.white,)),
+            backgroundColor: const Color.fromARGB(255, 40, 167, 69),
+
             centerTitle: false,
             elevation: 0,
             title: _isSearching
                 ? TextField(
                     decoration: const InputDecoration(
-                        border: InputBorder.none, hintText: 'Name, Email, ...'),
+                        border: InputBorder.none, hintText: 'Name, Email, ...',hintStyle: TextStyle(color: Colors.white)),
                     autofocus: true,
                     style: const TextStyle(fontSize: 17, letterSpacing: 0.5),
                     //when search text changes then updated search list
@@ -110,7 +111,7 @@ class _HomeChatState extends State<HomeChat> {
                       }
                     },
                   )
-                : const Text('Chat'),
+                : const Text('Chat',style: TextStyle(color: Colors.white),),
             actions: [
               //search user button
               IconButton(
@@ -121,17 +122,7 @@ class _HomeChatState extends State<HomeChat> {
                   },
                   icon: Icon(_isSearching
                       ? CupertinoIcons.clear_circled_solid
-                      : Icons.search)),
-
-              //more features button
-              // IconButton(
-              //     onPressed: () {
-              //       Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //               builder: (_) => ProfileScreen(user: APIs.me)));
-              //     },
-              //     icon: const Icon(Icons.more_vert))
+                      : Icons.search,color: Colors.white,)),
             ],
           ),
           body: Container(
@@ -150,7 +141,7 @@ class _HomeChatState extends State<HomeChat> {
                   //if data is loading
                   case ConnectionState.waiting:
                   case ConnectionState.none:
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator(color: const Color.fromARGB(255, 40, 167, 69),));
 
                   //if some or all data is loaded then show it
                   case ConnectionState.active:
@@ -193,7 +184,7 @@ class _HomeChatState extends State<HomeChat> {
                                   });
                             } else {
                               return const Center(
-                                child: CircularProgressIndicator(color: Color.fromRGBO(229, 184, 61, 1.0),)
+                                child: CircularProgressIndicator(color: const Color.fromARGB(255, 40, 167, 69),)
                               );
                             }
                         }

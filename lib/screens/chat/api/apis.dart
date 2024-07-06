@@ -15,7 +15,7 @@ class APIs {
   // for authentication
   static FirebaseAuth auth = FirebaseAuth.instance;
 
-  // for accessing cloud firestore database
+  // for accessing cloud FireStore database
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   // for accessing firebase storage
@@ -41,15 +41,6 @@ class APIs {
       }
     });
 
-    // for handling foreground messages
-    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    //   log('Got a message whilst in the foreground!');
-    //   log('Message data: ${message.data}');
-
-    //   if (message.notification != null) {
-    //     log('Message also contained a notification: ${message.notification}');
-    //   }
-    // });
   }
 
   // for sending push notification
@@ -111,7 +102,6 @@ class APIs {
       return true;
     } else {
       //user doesn't exists
-
       return false;
     }
   }
@@ -247,7 +237,7 @@ class APIs {
       ? '${user.uid}_$id'
       : '${id}_${user.uid}';
 
-  // for getting all messages of a specific conversation from firestore database
+  // for getting all messages of a specific conversation from FireStore database
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllMessages(
       ChatUser user) {
     return firestore

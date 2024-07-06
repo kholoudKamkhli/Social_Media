@@ -62,7 +62,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(color: const Color.fromARGB(255, 40, 167, 69),),
               );
             }
             return ListView.builder(
@@ -111,7 +111,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(color: const Color.fromARGB(255, 40, 167, 69),),
               );
             }
 

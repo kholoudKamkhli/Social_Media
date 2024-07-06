@@ -38,9 +38,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('000000000000000000000');
-    print(widget.user.id);
-    print(widget.user.email);
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: SafeArea(
@@ -56,11 +54,11 @@ class _ChatScreenState extends State<ChatScreen> {
             }
           },
           child: Scaffold(
-            backgroundColor: const Color.fromRGBO(229, 184, 61, 1.0),
+            backgroundColor: const Color.fromARGB(255, 40, 167, 69),
             //app bar
             appBar: AppBar(
               elevation: 0,
-              backgroundColor: const Color.fromRGBO(229, 184, 61, 1.0),
+              backgroundColor: const Color.fromARGB(255, 40, 167, 69),
               automaticallyImplyLeading: false,
               flexibleSpace: _appBar(),
               actions: [
@@ -73,7 +71,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           return AlertDialog(
                             backgroundColor: Colors.white,
                             title: Image.asset(
-                              'assets/glowyyy-removebg-preview.png',
+                              'assets/logo_final-removebg-preview.png',
                               height: 50,
                             ),
                             content: Column(
@@ -129,8 +127,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                     const ShapeDecoration(
                                                   gradient:
                                                       LinearGradient(colors: [
-                                                    Color(0xffffffff),
-                                                    Color(0xffefc643),
+                                                    Color(0xffffffff), const Color.fromARGB(255, 40, 167, 69),
                                                   ]),
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
@@ -177,7 +174,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                   gradient:
                                                       LinearGradient(colors: [
                                                     Color(0xffffffff),
-                                                    Color(0xffefc643),
+                                                        const Color.fromARGB(255, 40, 167, 69),
                                                   ]),
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
@@ -197,7 +194,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                         }
                                       } else {
                                         return const Center(
-                                          child: CircularProgressIndicator(),
+                                          child: CircularProgressIndicator(
+                                            color: const Color.fromARGB(255, 40, 167, 69),
+                                          ),
                                         );
                                       }
                                     })
@@ -272,7 +271,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         child: Padding(
                             padding: EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 20),
-                            child: CircularProgressIndicator(strokeWidth: 2,color:Color.fromRGBO(229, 184, 61, 1.0),))),
+                            child: CircularProgressIndicator(strokeWidth: 2,color:const Color.fromARGB(255, 40, 167, 69),))),
 
                   //chat input filed
                   StreamBuilder(
@@ -299,7 +298,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         } else {
                           return const Center(
                             child: CircularProgressIndicator(
-                              color: Color.fromRGBO(229, 184, 61, 1.0),
+                              color:const Color.fromARGB(255, 40, 167, 69),
                             ),
                           );
                         }
@@ -341,7 +340,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   IconButton(
                       onPressed: () => Navigator.pop(context),
                       icon:
-                          const Icon(Icons.arrow_back, color: Colors.black54)),
+                          const Icon(Icons.arrow_back, color: Colors.white)),
 
                   //user profile picture
                   ClipRRect(
@@ -368,7 +367,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       Text(list.isNotEmpty ? list[0].name : widget.user.name,
                           style: const TextStyle(
                               fontSize: 16,
-                              color: Colors.black87,
+                              color: Colors.white,
                               fontWeight: FontWeight.w500)),
 
                       //for adding some space
@@ -386,7 +385,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                   context: context,
                                   lastActive: widget.user.lastActive),
                           style: const TextStyle(
-                              fontSize: 13, color: Colors.black54)),
+                              fontSize: 13, color: Colors.white)),
                     ],
                   ),
                 ],
@@ -416,7 +415,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         setState(() => _showEmoji = !_showEmoji);
                       },
                       icon: const Icon(Icons.emoji_emotions,
-                          color: Color.fromRGBO(229, 184, 61, 1.0), size: 30)),
+                          color: const Color.fromARGB(255, 40, 167, 69), size: 30)),
 
                   Expanded(
                       child: TextFormField(
@@ -451,7 +450,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         }
                       },
                       icon: const Icon(Icons.image,
-                          color: Color.fromRGBO(229, 184, 61, 1.0), size: 30)),
+                          color: const Color.fromARGB(255, 40, 167, 69), size: 30)),
 
                   //adding some space
                   SizedBox(width: mq.width * .02),
@@ -482,7 +481,7 @@ class _ChatScreenState extends State<ChatScreen> {
             shape: const CircleBorder(),
             color: Colors.white,
             child: Icon(Icons.send,
-                color: Color.fromRGBO(229, 184, 61, 1.0), size: 28),
+                color: const Color.fromARGB(255, 40, 167, 69), size: 28),
           )
         ],
       ),

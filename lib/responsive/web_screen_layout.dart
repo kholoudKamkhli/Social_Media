@@ -74,82 +74,76 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
+        //leading: SizedBox(width: 0,),
         centerTitle: false,
-        title: Image.asset(
-          'assets/glowyyy-removebg-preview.png',
-          height: 80,
+        title:  Row(
+          children: [
+            Image.asset(
+              "assets/logo_final-removebg-preview.png",
+              height: 80,
+            ),
+          ],
         ),
         actions: [
-          // IconButton(
-          //   icon: const Icon(
-          //     Icons.store,
-          //     color: secondaryColor,
-          //   ),
-          //   onPressed: (){
-          //     // js.context.callMethod('open', ["http://127.0.0.1:3000/home/${pref.getString("access_token")}/${pref.getString("id")}"]);
-          //      _launchUrl("http://127.0.0.1:3000/shop/${pref.getString("access_token")}/${pref.getString("id")}",);
-          //   },
-          // ),
-          // IconButton(
-          //   icon: const Icon(
-          //     Icons.face,
-          //     color: secondaryColor,
-          //   ),
-          //   onPressed: (){
-          //     // js.context.callMethod('open', ["http://127.0.0.1:3000/home/${pref.getString("access_token")}/${pref.getString("id")}"]);
-          //     _launchUrl("http://127.0.0.1:3000/skintest/${pref.getString("access_token")}/${pref.getString("id")}",);
-          //   },
-          // ),
           IconButton(
             icon: Icon(
+              size: 35,
               Icons.home,
-              color: _page == 0 ? const Color.fromRGBO(229, 184, 61, 1.0) : secondaryColor,
+              color: _page == 0 ? const Color.fromARGB(255, 40, 167, 69)
+              : secondaryColor,
             ),
             onPressed: () => navigationTapped(0),
           ),
           IconButton(
             icon: Icon(
+              size: 35,
               Icons.search,
-              color: _page == 1 ? const Color.fromRGBO(229, 184, 61, 1.0) : secondaryColor,
+              color: _page == 1 ? const  Color.fromARGB(255, 40, 167, 69) : secondaryColor,
             ),
             onPressed: () => navigationTapped(1),
           ),
           IconButton(
+            icon: ImageIcon(
+              size: 40,
+              AssetImage("assets/2763259.png"),
+              color: _page == 5 ? const Color.fromARGB(255, 40, 167, 69): secondaryColor,
+            ),
+            onPressed: () => navigationTapped(5),
+          ),
+          IconButton(
+            icon: ImageIcon(
+              size: 40,
+              AssetImage("assets/3482672-200.png")
+              ,color: _page == 6 ? const Color.fromARGB(255, 40, 167, 69) : secondaryColor,
+            ),
+            onPressed: () => navigationTapped(6),
+          ),
+          IconButton(
             icon: Icon(
+              size: 35,
               Icons.add_a_photo,
-              color: _page == 2 ? const Color.fromRGBO(229, 184, 61, 1.0) : secondaryColor,
+              color: _page == 2 ? const  Color.fromARGB(255, 40, 167, 69) : secondaryColor,
             ),
             onPressed: () => navigationTapped(2),
           ),
-
           IconButton(
             icon: Icon(
-              Icons.person,
-              color: _page == 3 ? const Color.fromRGBO(229, 184, 61, 1.0) : secondaryColor,
-            ),
-            onPressed: () => navigationTapped(3),
-          ),
-          IconButton(
-            icon: Icon(
+              size: 35,
               Icons.chat,
-              color: _page == 4 ? const Color.fromRGBO(229, 184, 61, 1.0) : secondaryColor,
+              color: _page == 4 ? const  Color.fromARGB(255, 40, 167, 69) : secondaryColor,
             ),
             onPressed: () => navigationTapped(4),
           ),
           IconButton(
             icon: Icon(
+              size: 35,
               Icons.person,
-              color: _page == 5 ? const Color.fromRGBO(229, 184, 61, 1.0) : secondaryColor,
+              color: _page == 3 ? const  Color.fromARGB(255, 40, 167, 69) : secondaryColor,
             ),
-            onPressed: () => navigationTapped(5),
+            onPressed: () => navigationTapped(3),
           ),
-          IconButton(
-            icon: Icon(
-              Icons.store,
-              color: _page == 6 ? const Color.fromRGBO(229, 184, 61, 1.0) : secondaryColor,
-            ),
-            onPressed: () => navigationTapped(6),
-          ),
+
+
         ],
       ),
       body: PageView(

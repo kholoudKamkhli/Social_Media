@@ -51,19 +51,13 @@ class _AddPostScreenState extends State<AddPostScreen> {
   }
 
   void postImage(String uid, String username, String profImage) async {
-    print("showed here");
     setState(() {
       isLoading = true;
     });
     // start the loading
     try {
       // upload to storage and db
-      String res = await FireStoreMethods().uploadPost(
-        _descriptionController.text,
-        _file!,
-        uid,
-        username,
-        profImage,
+      String res = await FireStoreMethods().uploadPost(_descriptionController.text, _file!, uid, username, profImage,
       );
       if (res == "success") {
         setState(() {
@@ -109,14 +103,67 @@ class _AddPostScreenState extends State<AddPostScreen> {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
 
     return _file == null
-        ? Center(
-            child: IconButton(
-              icon: const Icon(
-                color: Color.fromRGBO(229, 184, 61, 1.0),
-                Icons.upload,
+        ?
+        Stack(
+            alignment: Alignment.center,
+            children: [
+              Image.asset(
+                "assets/img.png",
+                width: double.infinity,
+                height: double.infinity,
+                fit: BoxFit.fill,
               ),
-              onPressed: () => _selectImage(context),
-            ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.4,
+                height: MediaQuery.of(context).size.height * 0.4,
+                child: Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                        color: const Color.fromARGB(255, 40, 167, 69),
+                        style: BorderStyle.solid),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        "Add New Post Now",
+                        style: TextStyle(
+                          fontSize: 20,
+                            color: const Color.fromARGB(255, 40, 167, 69)),
+
+                      ),
+                      InkWell(
+                        onTap: ()=> _selectImage(context),
+                        child: Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 40, 167, 69),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                color: const Color.fromARGB(255, 40, 167, 69),
+                                style: BorderStyle.solid),
+                          ),
+                          child: Column(
+                            children: [
+                              Icon(
+                                color: Colors.white,
+                                Icons.upload,
+                              ),
+                              SizedBox(height: 10,),
+                              Text("Upload Picture",style: TextStyle(color: Colors.white),)
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
           )
         : Scaffold(
             backgroundColor: Colors.white,
@@ -125,7 +172,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
               leading: IconButton(
                 icon: const Icon(
                   Icons.arrow_back,
-                  color: Color.fromRGBO(229, 184, 61, 1.0),
+                    color: const Color.fromARGB(255, 40, 167, 69),
                 ),
                 onPressed: clearImage,
               ),
@@ -143,7 +190,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   child: const Text(
                     "Post",
                     style: TextStyle(
-                        color: Color.fromRGBO(229, 184, 61, 1.0),
+                        color: const Color.fromARGB(255, 40, 167, 69),
                         fontWeight: FontWeight.bold,
                         fontSize: 16.0),
                   ),
@@ -155,9 +202,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
               children: <Widget>[
                 isLoading
                     ? const LinearProgressIndicator(
-                        color: Color.fromRGBO(229, 184, 61, 1.0),
+                        color: const Color.fromARGB(255, 40, 167, 69),
                       )
                     : const Padding(padding: EdgeInsets.only(top: 0.0)),
+                SizedBox(height: 20,),
                 const Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -179,8 +227,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 45.0,
-                      width: 45.0,
+                      height: 120.0,
+                      width: 120.0,
                       child: AspectRatio(
                         aspectRatio: 487 / 451,
                         child: Container(

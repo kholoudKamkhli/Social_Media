@@ -25,11 +25,7 @@ class _FeedScreenState extends State<FeedScreen> {
           : AppBar(
         backgroundColor: mobileBackgroundColor,
         centerTitle: false,
-        title: SvgPicture.asset(
-          'assets/ic_instagram.svg',
-          color: primaryColor,
-          height: 32,
-        ),
+        title: Image.asset("assets/logo_final-removebg-preview.png"),
         actions: [
           IconButton(
             icon: const Icon(
@@ -45,8 +41,15 @@ class _FeedScreenState extends State<FeedScreen> {
         builder: (context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              child: const Center(
+                child: CircularProgressIndicator(color: const Color.fromARGB(255, 40, 167, 69),),
+              ),
             );
           }
           else if(snapshot.hasData){
@@ -63,7 +66,7 @@ class _FeedScreenState extends State<FeedScreen> {
               ),
             );
           }
-          else return CircularProgressIndicator();
+          else return CircularProgressIndicator(color: const Color.fromARGB(255, 40, 167, 69),);
         },
       ),
     );

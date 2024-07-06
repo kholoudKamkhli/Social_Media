@@ -70,6 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
@@ -85,11 +86,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 flex: 2,
                 child: Container(),
               ),
-              SvgPicture.asset(
-                'assets/ic_instagram.svg',
-                color: primaryColor,
-                height: 64,
-              ),
+              // SvgPicture.asset(
+              //   'assets/ic_instagram.svg',
+              //   color: primaryColor,
+              //   height: 64,
+              // ),
+              Image.asset("assets/pictureeee-removebg-preview.png",height: 380,),
               const SizedBox(
                 height: 64,
               ),
@@ -118,9 +120,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   decoration: const ShapeDecoration(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
                     ),
-                    color: Color.fromRGBO(229, 184, 61, 1.0),
+                    color: Color.fromARGB(255, 40, 167, 69),
                   ),
                   child: !_isLoading
                       ? const Text(
@@ -162,7 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ' Signup.',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Color(0xffe5b83d),
+                          color: Color.fromARGB(255, 40, 167, 69),
                         ),
                       ),
                     ),
@@ -207,14 +209,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (response.statusCode == 200) {
       var data = json.decode(await response.stream.bytesToString());
-      print("fdbgbfgbgn");
-      print(data);
+      // print("fdbgbfgbgn");
+      // print(data);
       String token = data['access_token'];
       String id = data['user']['id'].toString();
       pref.setString("id", id.toString());
       pref.setString("access_token", token);
-      print(pref.getString("id"));
-      print(pref.getString("access_token"));
+      // print(pref.getString("id"));
+      // print(pref.getString("access_token"));
     }
     else {
     }

@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone_flutter/models/user.dart' as model;
@@ -75,6 +76,7 @@ class _PostCardState extends State<PostCard> {
             return Container(
               // boundary needed for web
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
                 border: Border.all(
                   color: width > webScreenSize
                       ? secondaryColor
@@ -160,7 +162,7 @@ class _PostCardState extends State<PostCard> {
                               },
                             );
                           },
-                          icon: const Icon(Icons.more_vert),
+                          icon: const Icon(Icons.more_vert,color: const Color.fromARGB(255, 40, 167, 69),),
                         )
                             : Container(),
                       ],
@@ -222,7 +224,7 @@ class _PostCardState extends State<PostCard> {
                           icon: widget.snap['likes'].contains(user.uid)
                               ? const Icon(
                             Icons.favorite,
-                            color: Colors.red,
+                            color: const Color.fromARGB(255, 40, 167, 69),
                           )
                               : const Icon(
                             Icons.favorite_border,
@@ -246,18 +248,8 @@ class _PostCardState extends State<PostCard> {
                           ),
                         ),
                       ),
-                      IconButton(
-                          icon: const Icon(
-                            Icons.send,
-                          ),
-                          onPressed: () {}),
-                      Expanded(
-                          child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: IconButton(
-                                icon: const Icon(Icons.bookmark_border),
-                                onPressed: () {}),
-                          ))
+
+                      
                     ],
                   ),
                   //DESCRIPTION AND NUMBER OF COMMENTS
@@ -335,7 +327,7 @@ class _PostCardState extends State<PostCard> {
             );
           } else {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(color: const Color.fromARGB(255, 40, 167, 69),),
             );
           }
         });

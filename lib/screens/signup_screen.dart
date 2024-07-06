@@ -30,6 +30,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
   bool _isLoading = false;
+
   //Uint8List? _image;
   String selctFile = '';
   XFile? file;
@@ -61,9 +62,9 @@ class _SignupScreenState extends State<SignupScreen> {
         file: selectedImageInBytes!);
     // if string returned is sucess, user has been created
     if (res == "success") {
-      try{
+      try {
         await signup();
-      }catch(e){
+      } catch (e) {
         print("Error occured here");
         print(e.toString());
       }
@@ -101,7 +102,7 @@ class _SignupScreenState extends State<SignupScreen> {
   // }
   selectImage() async {
     FilePickerResult? fileResult =
-    await FilePicker.platform.pickFiles(allowMultiple: true);
+        await FilePicker.platform.pickFiles(allowMultiple: true);
 
     if (fileResult != null) {
       setState(() {
@@ -120,11 +121,10 @@ class _SignupScreenState extends State<SignupScreen> {
     print(selctFile);
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
@@ -137,32 +137,36 @@ class _SignupScreenState extends State<SignupScreen> {
                 flex: 2,
                 child: Container(),
               ),
-              SvgPicture.asset(
-                'assets/ic_instagram.svg',
-                color: primaryColor,
-                height: 64,
-              ),
+              // SvgPicture.asset(
+              //   'assets/pictureeee-removebg-preview.png',
+              //   color: primaryColor,
+              //   height: 64,
+              // ),
+              // Image.asset(
+              //   "assets/pictureeee-removebg-preview.png",
+              //   height: 120,
+              // ),
               const SizedBox(
-                height: 64,
+                height: 14,
               ),
               Stack(
                 children: [
                   selectedImageInBytes != null
                       ? CircleAvatar(
-                    radius: 64,
-                    backgroundImage: MemoryImage(selectedImageInBytes!),
-                    backgroundColor: Colors.grey,
-                  )
+                          radius: 64,
+                          backgroundImage: MemoryImage(selectedImageInBytes!),
+                          backgroundColor: Colors.grey,
+                        )
                       : const CircleAvatar(
-                    radius: 64,
-                    backgroundImage: NetworkImage(
-                        'https://i.stack.imgur.com/l60Hf.png'),
-                    backgroundColor: Colors.grey,
-                  ),
+                          radius: 64,
+                          backgroundImage: AssetImage("assets/pictureeee-removebg-preview.png"),
+                          backgroundColor: Color.fromARGB(12, 255, 255, 240),
+                        ),
                   Positioned(
                     bottom: -10,
                     left: 80,
                     child: IconButton(
+                      color: Colors.grey,
                       onPressed: selectImage,
                       icon: const Icon(Icons.add_a_photo),
                     ),
@@ -213,20 +217,20 @@ class _SignupScreenState extends State<SignupScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   decoration: const ShapeDecoration(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
                     ),
-                    color: Color.fromRGBO(229, 184, 61, 1.0),
+                    color: Color.fromARGB(255, 40, 167, 69),
                   ),
                   child: !_isLoading
                       ? const Text(
-                    'Sign up',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  )
+                          'Sign up',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        )
                       : const CircularProgressIndicator(
-                    color: Colors.white,
-                  ),
+                          color: Colors.white,
+                        ),
                 ),
               ),
               const SizedBox(
@@ -256,7 +260,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       child: const Text(
                         ' Login.',
                         style: TextStyle(
-                          color: Color.fromRGBO(229, 184, 61, 1.0),
+                          color: Color.fromARGB(255, 40, 167, 69),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -270,8 +274,10 @@ class _SignupScreenState extends State<SignupScreen> {
       ),
     );
   }
-  signup()async{
-    var request =http.MultipartRequest('POST', Uri.parse('http://127.0.0.1:8000/api/auth/register'));
+
+  signup() async {
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('http://127.0.0.1:8000/api/auth/register'));
     request.fields.addAll({
       'ageRange': '18-25',
       'isDoctor': '0',
@@ -282,7 +288,6 @@ class _SignupScreenState extends State<SignupScreen> {
       'email': _emailController.text
     });
 
-
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 201) {
@@ -291,9 +296,8 @@ class _SignupScreenState extends State<SignupScreen> {
       String id = data['user']['id'].toString();
       pref.setString("id", id.toString());
       pref.setString("access_token", token);
-    }
-    else {
-    print(response.reasonPhrase);
+    } else {
+      print(response.reasonPhrase);
     }
   }
 }
