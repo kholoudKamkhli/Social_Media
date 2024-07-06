@@ -1,25 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone_flutter/screens/chat/screens/home_screen.dart';
-import 'package:instagram_clone_flutter/screens/followers_screen.dart';
-import 'package:instagram_clone_flutter/screens/following_screen.dart';
 import 'package:instagram_clone_flutter/screens/shop.dart';
 import 'package:instagram_clone_flutter/screens/skin_test.dart';
 import 'package:instagram_clone_flutter/utils/colors.dart';
-import 'package:instagram_clone_flutter/utils/global_variable.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../di/di.dart';
 import '../main.dart';
-import '../resources/auth_methods.dart';
 import '../screens/add_post_screen.dart';
 import '../screens/feed_screen.dart';
 import '../screens/profile_screen.dart';
 import '../screens/search_screen.dart';
-import 'dart:js' as js;
-
 class WebScreenLayout extends StatefulWidget {
   const WebScreenLayout({Key? key}) : super(key: key);
 

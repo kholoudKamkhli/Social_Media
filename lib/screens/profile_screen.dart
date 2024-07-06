@@ -6,7 +6,7 @@ import 'package:instagram_clone_flutter/resources/firestore_methods.dart';
 import 'package:instagram_clone_flutter/screens/chat/models/chat_user.dart';
 import 'package:instagram_clone_flutter/screens/chat/screens/chat_screen.dart';
 import 'package:instagram_clone_flutter/screens/followers_screen.dart';
-import 'package:instagram_clone_flutter/screens/login_screen.dart';
+import 'package:instagram_clone_flutter/screens/auth/login_screen.dart';
 import 'package:instagram_clone_flutter/utils/colors.dart';
 import 'package:instagram_clone_flutter/utils/utils.dart';
 import 'package:instagram_clone_flutter/widgets/follow_button.dart';

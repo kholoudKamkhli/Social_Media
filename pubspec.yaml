@@ -29,6 +29,9 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   webview_flutter_web: ^0.2.2+4
+  flash: ^3.0.5+2
+  another_flushbar: ^1.12.30
+  flutter_bloc: ^8.1.5
   cloud_firestore: ^4.8.1
   cupertino_icons: ^1.0.2
   shared_preferences:
