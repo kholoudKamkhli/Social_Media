@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
   child: BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
-          Navigator.pop(context);
+          // Navigator.pop(context);
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
@@ -41,7 +41,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     webScreenLayout: WebScreenLayout(),
                   )),
               (route) => false);
-
           showFlushBar("Login Successfully", context, Colors.green);
         }
         if (state is LoginError) {
@@ -51,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         if(state is LoginLoading){
           //show loading dialog
-          dialogUtilites.lodingDialog(context, "Loading...");
+          showFlushBar("Loading...", context, Colors.grey);
         }
       },
   child: const LoginScreenContent(),

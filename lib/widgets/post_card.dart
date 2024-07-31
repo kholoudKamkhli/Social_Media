@@ -327,7 +327,7 @@ class _PostCardState extends State<PostCard> {
             );
           } else {
             return const Center(
-              child: CircularProgressIndicator(color: const Color.fromARGB(255, 40, 167, 69),),
+              // child: CircularProgressIndicator(color: const Color.fromARGB(255, 40, 167, 69),),
             );
           }
         });

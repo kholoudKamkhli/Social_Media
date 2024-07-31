@@ -184,7 +184,6 @@ class _HomeChatState extends State<HomeChat> {
                                   });
                             } else {
                               return const Center(
-                                child: CircularProgressIndicator(color: const Color.fromARGB(255, 40, 167, 69),)
                               );
                             }
                         }

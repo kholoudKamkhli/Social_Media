@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone_flutter/utils/colors.dart';
 import 'package:instagram_clone_flutter/utils/global_variable.dart';
 import 'package:instagram_clone_flutter/widgets/post_card.dart';
@@ -48,7 +47,7 @@ class _FeedScreenState extends State<FeedScreen> {
                 color: Colors.white,
               ),
               child: const Center(
-                child: CircularProgressIndicator(color: const Color.fromARGB(255, 40, 167, 69),),
+                child: CircularProgressIndicator(color: Colors.lightGreen,),
               ),
             );
           }
@@ -66,7 +65,9 @@ class _FeedScreenState extends State<FeedScreen> {
               ),
             );
           }
-          else return CircularProgressIndicator(color: const Color.fromARGB(255, 40, 167, 69),);
+          else return const Center(
+              child: CircularProgressIndicator(color: Colors.lightGreen,),
+            );
         },
       ),
     );
